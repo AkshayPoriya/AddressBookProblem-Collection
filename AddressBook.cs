@@ -31,9 +31,42 @@ namespace AddressBookSystem
         public void AddContacts()
         {
             bool flag = true;
+            string _firstName, _lastName, _address, _city, _state, _zip, _phoneNumber, _email;
             while (flag)
             {
+                Console.WriteLine("Enter First Name of Contact");
+                _firstName = Console.ReadLine();
+                Console.WriteLine("Enter Last Name of Contact");
+                _lastName = Console.ReadLine();
+                if(this.nameToContactMapper.ContainsKey(_firstName+" " + _lastName))
+                {
+                    Console.WriteLine("A contact already exist with this name, try again!\n");
+                    AddContacts();
+                    return;
+                }
+                Console.WriteLine("Enter Address");
+                _address = Console.ReadLine();
+                Console.WriteLine("Enter City");
+                _city = Console.ReadLine();
+                Console.WriteLine("Enter state");
+                _state = Console.ReadLine();
+                Console.WriteLine("Enter zip");
+                _zip = Console.ReadLine();
+                Console.WriteLine("Enter Phone Number");
+                _phoneNumber = Console.ReadLine();                
+                Console.WriteLine("Enter Email");
+                _email = Console.ReadLine();
+
                 Contact contact = new Contact();
+                contact.firstName = _firstName;
+                contact.lastName = _lastName;
+                contact.address = _address;
+                contact.city = _city;
+                contact.state = _state;
+                contact.zip = _zip;
+                contact.phoneNumber = _phoneNumber;
+                contact.email = _email;
+
                 this.contactList.Add(contact);
                 this.nameToContactMapper.Add(contact.firstName + " " + contact.lastName, contact);
                 Console.WriteLine("\nContact created successfully with following details: ");
@@ -43,7 +76,7 @@ namespace AddressBookSystem
                 Console.WriteLine("Phone Number: " + contact.phoneNumber + "\nEmail: " + contact.email);
                 Console.WriteLine("\nTo Add a New Contact Enter YES");
                 string option = Console.ReadLine();
-                if (option != "YES")
+                if (option.ToLower() != "yes")
                 {
                     flag = false;
                 }
@@ -115,7 +148,7 @@ namespace AddressBookSystem
 
                 Console.WriteLine("\nTo update more contact details enter YES");
                 string option = Console.ReadLine();
-                if (option != "YES")
+                if (option.ToLower() != "yes")
                 {
                     flag = false;
                 }
@@ -156,7 +189,7 @@ namespace AddressBookSystem
 
                 Console.WriteLine("\nTo Delete more contact details enter YES");
                 string option = Console.ReadLine();
-                if (option != "YES")
+                if (option.ToLower() != "yes")
                 {
                     flag = false;
                 }
