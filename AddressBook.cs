@@ -68,6 +68,28 @@ namespace AddressBookSystem
                 contact.email = _email;
 
                 this.contactList.Add(contact);
+                if (Program.cityToContactMapperGlobal.ContainsKey(contact.city))
+                {
+                    Program.cityToContactMapperGlobal[contact.city].Add(contact);
+                }
+                else
+                {
+                    List<Contact> list = new List<Contact>();
+                    list.Add(contact);
+                    Program.cityToContactMapperGlobal.Add(contact.city, list);
+                }
+
+                if (Program.stateToContactMapperGlobal.ContainsKey(contact.state))
+                {
+                    Program.stateToContactMapperGlobal[contact.state].Add(contact);
+                }
+                else
+                {
+                    List<Contact> list = new List<Contact>();
+                    list.Add(contact);
+                    Program.stateToContactMapperGlobal.Add(contact.state, list);
+                }
+
                 this.nameToContactMapper.Add(contact.firstName + " " + contact.lastName, contact);
                 Console.WriteLine("\nContact created successfully with following details: ");
                 Console.WriteLine("FirstName: " + contact.firstName + "\nLast Name :" + contact.lastName);
@@ -89,46 +111,84 @@ namespace AddressBookSystem
         public void EditDetails()
         {
             bool flag = true;
+            string _firstName, _lastName, _address, _city, _state, _zip, _phoneNumber, _email;
             while (flag)
             {
                 Console.WriteLine("\nTo modify details, enter firstname followed by a space, followed by lastname of the contact");
                 string name = Console.ReadLine();
                 if (this.nameToContactMapper.ContainsKey(name))
                 {
-                    Contact contact = this.nameToContactMapper[name];
                     Console.WriteLine("Enter Latest Details of Contact!");
-
                     Console.WriteLine("Enter First Name of Contact");
-                    string firstName = Console.ReadLine();
-                    contact.firstName = firstName;
-
+                    _firstName = Console.ReadLine();
                     Console.WriteLine("Enter Last Name of Contact");
-                    string lastName = Console.ReadLine();
-                    contact.lastName = lastName;
-
+                    _lastName = Console.ReadLine();
+                    if (this.nameToContactMapper.ContainsKey(_firstName + " " + _lastName) && (_firstName + " " + _lastName)!=name)
+                    {
+                        Console.WriteLine("A contact already exist with this name, try again!\n");
+                        EditDetails();
+                        return;
+                    }
                     Console.WriteLine("Enter Address");
-                    string address = Console.ReadLine();
-                    contact.address = address;
-
+                    _address = Console.ReadLine();
                     Console.WriteLine("Enter City");
-                    string city = Console.ReadLine();
-                    contact.city = city;
-
+                    _city = Console.ReadLine();
                     Console.WriteLine("Enter state");
-                    string state = Console.ReadLine();
-                    contact.state = state;
-
+                    _state = Console.ReadLine();
                     Console.WriteLine("Enter zip");
-                    string zip = Console.ReadLine();
-                    contact.zip = zip;
-
+                    _zip = Console.ReadLine();
                     Console.WriteLine("Enter Phone Number");
-                    string phoneNumber = Console.ReadLine();
-                    contact.phoneNumber = phoneNumber;
-
+                    _phoneNumber = Console.ReadLine();
                     Console.WriteLine("Enter Email");
-                    string email = Console.ReadLine();
-                    contact.email = email;
+                    _email = Console.ReadLine();
+
+                    Contact contact = this.nameToContactMapper[name];
+                    string oldCityName = contact.city;
+                    string oldStateName = contact.state;
+                    contact.firstName = _firstName;
+                    contact.lastName = _lastName;
+                    contact.address = _address;
+                    contact.city = _city;
+                    contact.state = _state;
+                    contact.zip = _zip;
+                    contact.phoneNumber = _phoneNumber;
+                    contact.email = _email;
+
+                    //foreach(Contact contact1 in Program.cityToContactMapperGlobal[oldCityName])
+                    //{
+                    //    if((contact1.firstName+" " + contact1.lastName) == name)
+                    //    {
+                    //        Program.cityToContactMapperGlobal[oldCityName].Remove(contact1);
+                    //    }
+                    //}
+                    //if (Program.cityToContactMapperGlobal.ContainsKey(contact.city))
+                    //{
+                    //    Program.cityToContactMapperGlobal[contact.city].Add(contact);
+                    //}
+                    //else
+                    //{
+                    //    List<Contact> list = new List<Contact>();
+                    //    list.Add(contact);
+                    //    Program.cityToContactMapperGlobal.Add(contact.city, list);
+                    //}
+
+                    //foreach (Contact contact1 in Program.stateToContactMapperGlobal[oldStateName])
+                    //{
+                    //    if ((contact1.firstName + " " + contact1.lastName) == name)
+                    //    {
+                    //        Program.stateToContactMapperGlobal[oldStateName].Remove(contact1);
+                    //    }
+                    //}
+                    //if (Program.stateToContactMapperGlobal.ContainsKey(contact.state))
+                    //{
+                    //    Program.stateToContactMapperGlobal[contact.state].Add(contact);
+                    //}
+                    //else
+                    //{
+                    //    List<Contact> list = new List<Contact>();
+                    //    list.Add(contact);
+                    //    Program.stateToContactMapperGlobal.Add(contact.state, list);
+                    //}
 
                     Console.WriteLine("\nDetails modified successfully with following entries: ");
                     Console.WriteLine("FirstName: " + contact.firstName + "\nLast Name :" + contact.lastName);
@@ -168,12 +228,28 @@ namespace AddressBookSystem
                 if (this.nameToContactMapper.ContainsKey(name))
                 {
                     Contact contact = this.nameToContactMapper[name];
+                    string oldCityName = contact.city;
+                    string oldStateName = contact.state;
                     var index = this.contactList.FindIndex(i => i == contact); // like Where/Single
                     if (index >= 0)
                     {   // ensure item found
                         this.contactList.RemoveAt(index);
                     }
 
+                    //foreach (Contact contact1 in Program.stateToContactMapperGlobal[oldStateName])
+                    //{
+                    //    if ((contact1.firstName + " " + contact1.lastName) == name)
+                    //    {
+                    //        Program.stateToContactMapperGlobal[oldStateName].Remove(contact1);
+                    //    }
+                    //}
+                    //foreach (Contact contact1 in Program.cityToContactMapperGlobal[oldCityName])
+                    //{
+                    //    if ((contact1.firstName + " " + contact1.lastName) == name)
+                    //    {
+                    //        Program.cityToContactMapperGlobal[oldCityName].Remove(contact1);
+                    //    }
+                    //}
                     this.nameToContactMapper.Remove(name);
                     Console.WriteLine("Contact deleted successfully");
                 }
