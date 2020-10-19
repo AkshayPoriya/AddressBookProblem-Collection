@@ -2,7 +2,7 @@
 // <copyright file="AddressBook.cs" company="Bridgelabz">
 //   Copyright © 2018 Company
 // </copyright>
-// <creator Name="Akshay"/>
+// <creator Name="Akshay Poriya"/>
 // --------------------------------------------------------------------------------------------------------------------
 namespace AddressBookSystem
 {
@@ -123,7 +123,7 @@ namespace AddressBookSystem
                     _firstName = Console.ReadLine();
                     Console.WriteLine("Enter Last Name of Contact");
                     _lastName = Console.ReadLine();
-                    if (this.nameToContactMapper.ContainsKey(_firstName + " " + _lastName) && (_firstName + " " + _lastName)!=name)
+                    if (this.nameToContactMapper.ContainsKey(_firstName + " " + _lastName) && (_firstName + " " + _lastName) != name)
                     {
                         Console.WriteLine("A contact already exist with this name, try again!\n");
                         EditDetails();
@@ -225,6 +225,7 @@ namespace AddressBookSystem
                     {   // ensure item found
                         this.contactList.RemoveAt(index);
                     }
+
                     this.nameToContactMapper.Remove(name);
                     Console.WriteLine("Contact deleted successfully");
                 }
