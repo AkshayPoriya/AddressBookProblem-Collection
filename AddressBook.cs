@@ -145,6 +145,8 @@ namespace AddressBookSystem
                     Contact contact = this.nameToContactMapper[name];
                     string oldCityName = contact.city;
                     string oldStateName = contact.state;
+                    Program.cityToContactMapperGlobal[oldCityName].Remove(contact);
+                    Program.stateToContactMapperGlobal[oldStateName].Remove(contact);
                     contact.firstName = _firstName;
                     contact.lastName = _lastName;
                     contact.address = _address;
@@ -154,41 +156,27 @@ namespace AddressBookSystem
                     contact.phoneNumber = _phoneNumber;
                     contact.email = _email;
 
-                    //foreach(Contact contact1 in Program.cityToContactMapperGlobal[oldCityName])
-                    //{
-                    //    if((contact1.firstName+" " + contact1.lastName) == name)
-                    //    {
-                    //        Program.cityToContactMapperGlobal[oldCityName].Remove(contact1);
-                    //    }
-                    //}
-                    //if (Program.cityToContactMapperGlobal.ContainsKey(contact.city))
-                    //{
-                    //    Program.cityToContactMapperGlobal[contact.city].Add(contact);
-                    //}
-                    //else
-                    //{
-                    //    List<Contact> list = new List<Contact>();
-                    //    list.Add(contact);
-                    //    Program.cityToContactMapperGlobal.Add(contact.city, list);
-                    //}
+                    if (Program.cityToContactMapperGlobal.ContainsKey(contact.city))
+                    {
+                        Program.cityToContactMapperGlobal[contact.city].Add(contact);
+                    }
+                    else
+                    {
+                        List<Contact> list = new List<Contact>();
+                        list.Add(contact);
+                        Program.cityToContactMapperGlobal.Add(contact.city, list);
+                    }
 
-                    //foreach (Contact contact1 in Program.stateToContactMapperGlobal[oldStateName])
-                    //{
-                    //    if ((contact1.firstName + " " + contact1.lastName) == name)
-                    //    {
-                    //        Program.stateToContactMapperGlobal[oldStateName].Remove(contact1);
-                    //    }
-                    //}
-                    //if (Program.stateToContactMapperGlobal.ContainsKey(contact.state))
-                    //{
-                    //    Program.stateToContactMapperGlobal[contact.state].Add(contact);
-                    //}
-                    //else
-                    //{
-                    //    List<Contact> list = new List<Contact>();
-                    //    list.Add(contact);
-                    //    Program.stateToContactMapperGlobal.Add(contact.state, list);
-                    //}
+                    if (Program.stateToContactMapperGlobal.ContainsKey(contact.state))
+                    {
+                        Program.stateToContactMapperGlobal[contact.state].Add(contact);
+                    }
+                    else
+                    {
+                        List<Contact> list = new List<Contact>();
+                        list.Add(contact);
+                        Program.stateToContactMapperGlobal.Add(contact.state, list);
+                    }
 
                     Console.WriteLine("\nDetails modified successfully with following entries: ");
                     Console.WriteLine("FirstName: " + contact.firstName + "\nLast Name :" + contact.lastName);
@@ -230,26 +218,14 @@ namespace AddressBookSystem
                     Contact contact = this.nameToContactMapper[name];
                     string oldCityName = contact.city;
                     string oldStateName = contact.state;
+                    Program.cityToContactMapperGlobal[oldCityName].Remove(contact);
+                    Program.stateToContactMapperGlobal[oldStateName].Remove(contact);
                     var index = this.contactList.FindIndex(i => i == contact); // like Where/Single
                     if (index >= 0)
                     {   // ensure item found
                         this.contactList.RemoveAt(index);
                     }
 
-                    //foreach (Contact contact1 in Program.stateToContactMapperGlobal[oldStateName])
-                    //{
-                    //    if ((contact1.firstName + " " + contact1.lastName) == name)
-                    //    {
-                    //        Program.stateToContactMapperGlobal[oldStateName].Remove(contact1);
-                    //    }
-                    //}
-                    //foreach (Contact contact1 in Program.cityToContactMapperGlobal[oldCityName])
-                    //{
-                    //    if ((contact1.firstName + " " + contact1.lastName) == name)
-                    //    {
-                    //        Program.cityToContactMapperGlobal[oldCityName].Remove(contact1);
-                    //    }
-                    //}
                     this.nameToContactMapper.Remove(name);
                     Console.WriteLine("Contact deleted successfully");
                 }

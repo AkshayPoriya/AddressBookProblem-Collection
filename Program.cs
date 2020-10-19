@@ -230,7 +230,7 @@ namespace AddressBookSystem
         {
             Console.WriteLine("\nEnter name of the city!");
             string cityName = Console.ReadLine();
-            if (!cityToContactMapperGlobal.ContainsKey(cityName))
+            if (!cityToContactMapperGlobal.ContainsKey(cityName) || cityToContactMapperGlobal[cityName].Count==0)
             {
                 Console.WriteLine("No record found with such city name!");
                 return;
@@ -249,7 +249,7 @@ namespace AddressBookSystem
         {
             Console.WriteLine("\nEnter name of the State!");
             string stateName = Console.ReadLine();
-            if (!cityToContactMapperGlobal.ContainsKey(stateName))
+            if (!stateToContactMapperGlobal.ContainsKey(stateName) || stateToContactMapperGlobal[stateName].Count==0)
             {
                 Console.WriteLine("No record found with such state name!");
                 return;
