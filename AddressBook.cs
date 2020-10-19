@@ -218,26 +218,13 @@ namespace AddressBookSystem
                     Contact contact = this.nameToContactMapper[name];
                     string oldCityName = contact.city;
                     string oldStateName = contact.state;
+                    Program.cityToContactMapperGlobal[oldCityName].Remove(contact);
+                    Program.stateToContactMapperGlobal[oldStateName].Remove(contact);
                     var index = this.contactList.FindIndex(i => i == contact); // like Where/Single
                     if (index >= 0)
                     {   // ensure item found
                         this.contactList.RemoveAt(index);
                     }
-
-                    //foreach (Contact contact1 in Program.stateToContactMapperGlobal[oldStateName])
-                    //{
-                    //    if ((contact1.firstName + " " + contact1.lastName) == name)
-                    //    {
-                    //        Program.stateToContactMapperGlobal[oldStateName].Remove(contact1);
-                    //    }
-                    //}
-                    //foreach (Contact contact1 in Program.cityToContactMapperGlobal[oldCityName])
-                    //{
-                    //    if ((contact1.firstName + " " + contact1.lastName) == name)
-                    //    {
-                    //        Program.cityToContactMapperGlobal[oldCityName].Remove(contact1);
-                    //    }
-                    //}
                     this.nameToContactMapper.Remove(name);
                     Console.WriteLine("Contact deleted successfully");
                 }
